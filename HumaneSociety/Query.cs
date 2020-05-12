@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -176,7 +177,7 @@ namespace HumaneSociety
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
 
-            //throw new NotImplementedException();
+            
         }
 
         internal static Animal GetAnimalByID(int id)
@@ -186,29 +187,33 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {            
+        {   
+            
             throw new NotImplementedException();
         }
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            db.Animals.DeleteOnSubmit(animal);
+            db.SubmitChanges();
+            //throw new NotImplementedException();
         }
         
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
+            //Animal animal = updates.Where(u => u.Value == )
+
+            var animal = db.Animals.Where(a => a.Category.Name == "dog");
+            
             throw new NotImplementedException();
         }
 
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
-
         {
             int getCategoryId = db.Categories.Where(c => c.Name == categoryName).Select(c => c.CategoryId).SingleOrDefault();
-
             return getCategoryId;
-
         }
         
         internal static Room GetRoom(int animalId)
@@ -242,6 +247,9 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
+            Adoption adoption = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).SingleOrDefault();
+            db.Adoptions.DeleteOnSubmit(adoption);
+            db.SubmitChanges();
             throw new NotImplementedException();
         }
 
