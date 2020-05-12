@@ -195,22 +195,15 @@ namespace HumaneSociety
         {
             throw new NotImplementedException();
         }
-         
+
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
-<<<<<<< HEAD
+
         {
             int getCategoryId = db.Categories.Where(c => c.Name == categoryName).Select(c => c.CategoryId).SingleOrDefault();
 
             return getCategoryId;
-=======
-        { 
-            int getCategoryId = db.Categories.Where(c => c.Name == categoryName).Select(c => c.CategoryId).SingleOrDefault();
-            
-            return getCategoryId;
-           
-           
->>>>>>> b2793e4387e71acdb2dd9469bc8e877103351f11
+
         }
         
         internal static Room GetRoom(int animalId)
