@@ -203,9 +203,7 @@ namespace HumaneSociety
         internal static int GetCategoryId(string categoryName)
         {
             int getCategoryId = db.Categories.Where(c => c.Name == categoryName).Select(c => c.CategoryId).SingleOrDefault();
-
             return getCategoryId;
-
         }
         
         internal static Room GetRoom(int animalId)
