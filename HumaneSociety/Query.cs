@@ -173,11 +173,9 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
 
-            
         }
 
         internal static Animal GetAnimalByID(int id)
@@ -196,7 +194,7 @@ namespace HumaneSociety
         {
             db.Animals.DeleteOnSubmit(animal);
             db.SubmitChanges();
-            //throw new NotImplementedException();
+
         }
         
         // TODO: Animal Multi-Trait Search
@@ -220,7 +218,6 @@ namespace HumaneSociety
         {
             Room roomNumber = db.Rooms.Where(r => r.AnimalId == animalId).SingleOrDefault();
             return roomNumber;
-
         }
         
         internal static int GetDietPlanId(string dietPlanName)
