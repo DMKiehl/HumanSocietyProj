@@ -225,7 +225,6 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            
             IQueryable<Animal> animals = db.Animals;
             foreach (KeyValuePair<int, string> item in updates)
             {
@@ -274,13 +273,8 @@ namespace HumaneSociety
                         animals = animals.Where(a => a.AnimalId == ID);
                         break;
                 }
-            }
-
-            
+            }           
             return animals;
-
-
-
         }
 
         // TODO: Misc Animal Things
@@ -325,7 +319,6 @@ namespace HumaneSociety
             Adoption adoption = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).SingleOrDefault();
             db.Adoptions.DeleteOnSubmit(adoption);
             db.SubmitChanges();
-            
         }
 
         // TODO: Shots Stuff
