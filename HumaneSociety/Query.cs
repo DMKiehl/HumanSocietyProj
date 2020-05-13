@@ -244,10 +244,12 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
+            Animal animal = db.Animals.Where(a => a.AnimalId == animalId).Single();
+            animal.AdoptionStatus = "not adopted";
             Adoption adoption = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).SingleOrDefault();
             db.Adoptions.DeleteOnSubmit(adoption);
             db.SubmitChanges();
-            throw new NotImplementedException();
+            
         }
 
         // TODO: Shots Stuff
