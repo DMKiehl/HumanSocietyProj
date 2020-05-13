@@ -357,11 +357,13 @@ namespace HumaneSociety
             if (isAdopted == true)
             {
                 adoption1.ApprovalStatus = "Approved";
+                adoption1.PaymentCollected = true;
             }
             else
             {
                 adoption1.ApprovalStatus = "Not Approved";
             }
+            db.SubmitChanges();
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
@@ -376,7 +378,8 @@ namespace HumaneSociety
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            var getShots = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId); 
+            return getShots;
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
