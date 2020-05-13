@@ -173,7 +173,8 @@ namespace HumaneSociety
             switch (crudOperation)
             {
                 case "read":
-                    employee = db.Employees.Where(e => e.EmployeeNumber == employee.EmployeeNumber).SingleOrDefault();
+                    EmployeeFromDB= db.Employees.Where(e => e.EmployeeNumber == employee.EmployeeNumber).SingleOrDefault();
+                    UserInterface.DisplayEmployeeInfo(EmployeeFromDB);
                     break;
                 case "delete":
                     EmployeeFromDB = db.Employees.Where(e => e.EmployeeNumber == employee.EmployeeNumber).SingleOrDefault();
