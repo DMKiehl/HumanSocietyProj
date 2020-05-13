@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -196,15 +198,66 @@ namespace HumaneSociety
             db.SubmitChanges();
 
         }
-        
+
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            //Animal animal = updates.Where(u => u.Value == )
-
-            var animal = db.Animals.Where(a => a.Category.Name == "dog");
             
-            throw new NotImplementedException();
+            IQueryable<Animal> animals = db.Animals;
+            foreach (KeyValuePair<int, string> item in updates)
+            {
+                switch (item.Key)
+                {
+                    case 1:
+                        int categoryID = GetCategoryId(item.Value);
+                        animals = animals.Where(a => a.CategoryId == categoryID);
+                        break;
+                    case 2:
+                        animals = animals.Where(a => a.Name == item.Value);
+                        break;
+                    case 3:
+                        int age = Convert.ToInt32(item.Value);
+                        animals = animals.Where(a => a.Age == age);
+                        break;
+                    case 4:
+                        animals = animals.Where(a => a.Demeanor == item.Value);
+                        break;
+                    case 5:
+                        if (item.Value == "yes")
+                        {
+                            animals = animals.Where(a => a.KidFriendly == true);
+                        }
+                        else
+                        {
+                            animals = animals.Where(a => a.KidFriendly == false);
+                        }
+                        break;
+                    case 6:
+                        if (item.Value == "yes")
+                        {
+                            animals = animals.Where(a => a.PetFriendly == true);
+                        }
+                        else
+                        {
+                            animals = animals.Where(a => a.PetFriendly == false);
+                        }
+                        break;
+                    case 7:
+                        int weight = Convert.ToInt32(item.Value);
+                        animals = animals.Where(a => a.Weight == weight);
+                        break;
+                    case 8:
+                        int ID = Convert.ToInt32(item.Value);
+                        animals = animals.Where(a => a.AnimalId == ID);
+                        break;
+                }
+            }
+
+            
+            return animals;
+
+
+
         }
 
         // TODO: Misc Animal Things
