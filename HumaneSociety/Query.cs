@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -196,15 +198,14 @@ namespace HumaneSociety
             db.SubmitChanges();
 
         }
-        
+
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             IQueryable<Animal> animals = db.Animals;
-
-            foreach (KeyValuePair<int, string> item  in updates)
+            foreach (KeyValuePair<int, string> item in updates)
             {
-                switch(item.Key)
+                switch (item.Key)
                 {
                     case 1:
                         int categoryID = GetCategoryId(item.Value);
@@ -214,7 +215,7 @@ namespace HumaneSociety
                         animals = animals.Where(a => a.Name == item.Value);
                         break;
                     case 3:
-                        int age = int.Parse(item.Value);
+                        int age = Convert.ToInt32(item.Value);
                         animals = animals.Where(a => a.Age == age);
                         break;
                     case 4:
@@ -241,15 +242,15 @@ namespace HumaneSociety
                         }
                         break;
                     case 7:
-                        int weight = int.Parse(item.Value);
+                        int weight = Convert.ToInt32(item.Value);
                         animals = animals.Where(a => a.Weight == weight);
                         break;
                     case 8:
-                        int ID = int.Parse(item.Value);
+                        int ID = Convert.ToInt32(item.Value);
                         animals = animals.Where(a => a.AnimalId == ID);
                         break;
                 }
-            }
+            }           
             return animals;
         }
 
