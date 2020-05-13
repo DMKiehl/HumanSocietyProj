@@ -177,7 +177,6 @@ namespace HumaneSociety
         {
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
-
         }
 
         internal static Animal GetAnimalByID(int id)
@@ -187,16 +186,59 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {   
-            
-            throw new NotImplementedException();
+        {
+            Animal animals = db.Animals.Where(a => a.AnimalId == animalId).SingleOrDefault();
+
+            foreach (KeyValuePair<int, string> item in updates)
+            {
+                switch (item.Key)
+                {
+                    case 1:
+                        int categoryID = GetCategoryId(item.Value);
+                        animals.CategoryId = categoryID;
+                        break;
+                    case 2:
+                        animals.Name = item.Value;
+                        break;
+                    case 3:
+                        int age = int.Parse(item.Value);
+                        animals.Age = age;
+                        break;
+                    case 4:
+                        animals.Demeanor = item.Value;
+                        break;
+                    case 5:
+                        if (item.Value == "yes")
+                        {
+                            animals.KidFriendly = true;
+                        }
+                        else
+                        {
+                            animals.KidFriendly = false;
+                        }
+                        break;
+                    case 6:
+                        if (item.Value == "yes")
+                        {
+                            animals.PetFriendly = true;
+                        }
+                        else
+                        {
+                            animals.PetFriendly = false;
+                        }
+                        break;
+                    case 7:
+                        int weight = int.Parse(item.Value);
+                        animals.Weight = weight;
+                        break;
+                }
+            }
         }
 
         internal static void RemoveAnimal(Animal animal)
         {
             db.Animals.DeleteOnSubmit(animal);
             db.SubmitChanges();
-
         }
 
         // TODO: Animal Multi-Trait Search
@@ -215,7 +257,7 @@ namespace HumaneSociety
                         animals = animals.Where(a => a.Name == item.Value);
                         break;
                     case 3:
-                        int age = Convert.ToInt32(item.Value);
+                        int age = int.Parse(item.Value);
                         animals = animals.Where(a => a.Age == age);
                         break;
                     case 4:
@@ -242,11 +284,11 @@ namespace HumaneSociety
                         }
                         break;
                     case 7:
-                        int weight = Convert.ToInt32(item.Value);
+                        int weight = int.Parse(item.Value);
                         animals = animals.Where(a => a.Weight == weight);
                         break;
                     case 8:
-                        int ID = Convert.ToInt32(item.Value);
+                        int ID = int.Parse(item.Value);
                         animals = animals.Where(a => a.AnimalId == ID);
                         break;
                 }
