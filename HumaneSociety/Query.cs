@@ -200,11 +200,57 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            //Animal animal = updates.Where(u => u.Value == )
+            IQueryable<Animal> animals = db.Animals;
 
-            var animal = db.Animals.Where(a => a.Category.Name == "dog");
-            
-            throw new NotImplementedException();
+            foreach (KeyValuePair<int, string> item  in updates)
+            {
+                switch(item.Key)
+                {
+                    case 1:
+                        int categoryID = GetCategoryId(item.Value);
+                        animals = animals.Where(a => a.CategoryId == categoryID);
+                        break;
+                    case 2:
+                        animals = animals.Where(a => a.Name == item.Value);
+                        break;
+                    case 3:
+                        int age = int.Parse(item.Value);
+                        animals = animals.Where(a => a.Age == age);
+                        break;
+                    case 4:
+                        animals = animals.Where(a => a.Demeanor == item.Value);
+                        break;
+                    case 5:
+                        if (item.Value == "yes")
+                        {
+                            animals = animals.Where(a => a.KidFriendly == true);
+                        }
+                        else
+                        {
+                            animals = animals.Where(a => a.KidFriendly == false);
+                        }
+                        break;
+                    case 6:
+                        if (item.Value == "yes")
+                        {
+                            animals = animals.Where(a => a.PetFriendly == true);
+                        }
+                        else
+                        {
+                            animals = animals.Where(a => a.PetFriendly == false);
+                        }
+                        break;
+                    case 7:
+                        int weight = int.Parse(item.Value);
+                        animals = animals.Where(a => a.Weight == weight);
+                        break;
+                    case 8:
+                        int ID = int.Parse(item.Value);
+                        animals = animals.Where(a => a.AnimalId == ID);
+                        break;
+                }
+            }
+            return animals;
         }
 
         // TODO: Misc Animal Things
@@ -249,7 +295,6 @@ namespace HumaneSociety
             Adoption adoption = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).SingleOrDefault();
             db.Adoptions.DeleteOnSubmit(adoption);
             db.SubmitChanges();
-            
         }
 
         // TODO: Shots Stuff
